@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0FFFCF98"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="346dp"
+        android:background="@drawable/button_background"
+        android:text="Submit"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="71dp"
+        android:background="#00B81212"
+        android:text="TextView"
+        android:textAlignment="center"
+
+        android:textSize="55sp" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+        android:textAlignment="center"
+
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_below="@+id/score"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#6D435A"
+        android:ems="10"
+        android:hint="Answer Here"
+        android:inputType="numberSigned"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+
+        android:textColorHighlight="#9C27B0"
+        android:textColorHint="#66FFFFFF"
+        android:textColorLink="#673AB7"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:textSize="40sp" />
+
+</RelativeLayout>
