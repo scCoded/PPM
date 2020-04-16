@@ -10,14 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.autismdiaryapp.ui.Diary.DiaryContract;
+import com.example.autismdiaryapp.ui.Games.Game1Reaction.Game1;
+import com.example.autismdiaryapp.ui.Games.Game1Reaction.Game1Contract;
+import com.example.autismdiaryapp.ui.Games.Game2EmotionRecognition.Game2Contract;
+import com.example.autismdiaryapp.ui.Games.Game3MathsQuiz.Game3;
+import com.example.autismdiaryapp.ui.Games.Game3MathsQuiz.Game3Contract;
 import com.example.autismdiaryapp.ui.Games.Game4Scenarios.Response;
 import com.example.autismdiaryapp.ui.Games.Game4Scenarios.Scenario;
 import com.example.autismdiaryapp.ui.Games.Game4Scenarios.ScenarioContract;
-
+import com.example.autismdiaryapp.ui.Games.Game1Reaction.Score1;
 
 public class QuizDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "MainDatabase.db";
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 13;
 
 
     private SQLiteDatabase db;
@@ -30,6 +35,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         this.db = db;
+
 
         final String SQL_CREATE_QUESTIONS_TABLE = "CREATE TABLE " +
                 QuizContract.QuestionsTable.TABLE_NAME + "(" +
@@ -81,8 +87,23 @@ public class QuizDbHelper extends SQLiteOpenHelper {
                 DiaryContract.DiaryTable.COLUMN_SLEEP + " INTEGER" +
                 ")" ;
 
+        final String SQL_CREATE_GAME1_TABLE = "CREATE TABLE "  +
+                Game1Contract.Game1Table.TABLE_NAME  + "(" +
+                Game1Contract.Game1Table._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                Game1Contract.Game1Table.COLUMN_SCORE1 + " INTEGER" +
+                ")";
+        final String SQL_CREATE_GAME2_TABLE = "CREATE TABLE "  +
+                Game2Contract.Game2Table.TABLE_NAME  + "(" +
+                Game2Contract.Game2Table._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                Game2Contract.Game2Table.COLUMN_SCORE2 + " INTEGER" +
+                ")";
+        final String SQL_CREATE_GAME3_TABLE = "CREATE TABLE "  +
+                Game3Contract.Game3Table.TABLE_NAME  + "(" +
+                Game3Contract.Game3Table._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                Game3Contract.Game3Table.COLUMN_SCORE3 + " INTEGER" +
+                ")";
 
-                db.execSQL(SQL_CREATE_ANSWERS_TABLE);
+        db.execSQL(SQL_CREATE_ANSWERS_TABLE);
         db.execSQL(SQL_CREATE_QUESTIONS_TABLE);
 
         db.execSQL(SQL_CREATE_RESPONSES_TABLE);
@@ -90,6 +111,9 @@ public class QuizDbHelper extends SQLiteOpenHelper {
 
         db.execSQL(SQL_CREATE_DIARY_TABLE);
 
+        db.execSQL(SQL_CREATE_GAME1_TABLE);
+        db.execSQL(SQL_CREATE_GAME2_TABLE);
+        db.execSQL(SQL_CREATE_GAME3_TABLE);
        
 
         fillScenarioTable();
@@ -109,6 +133,9 @@ public class QuizDbHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS " + DiaryContract.DiaryTable.TABLE_NAME);
 
+        db.execSQL("DROP TABLE IF EXISTS " + Game1Contract.Game1Table.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Game2Contract.Game2Table.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Game3Contract.Game3Table.TABLE_NAME);
         onCreate(db);
     }
 
@@ -143,7 +170,6 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         cv.put(QuizContract.QuestionsTable.COLUMN_OPTION2, question.getOption2());
         cv.put(QuizContract.QuestionsTable.COLUMN_OPTION3, question.getOption3());
         db.insert(QuizContract.QuestionsTable.TABLE_NAME, null, cv);
-
     }
 
     public void addAnswer(Answer answer){
@@ -152,7 +178,72 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         db.insert(QuizContract.AnswersTable.TABLE_NAME,null,cv);
     }
 
+    public void addScore1(Score1 score){
+        db = getWritableDatabase();
 
+        ContentValues cv = new ContentValues();
+        cv.put(Game1Contract.Game1Table.COLUMN_SCORE1, score.getScore());
+        db.insert(Game1Contract.Game1Table.TABLE_NAME, null, cv);
+    }
+
+    public void addScore2(int Score){
+        db = getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(Game2Contract.Game2Table.COLUMN_SCORE2, Score);
+        db.insert(Game2Contract.Game2Table.TABLE_NAME, null, cv);
+    }
+    public void addScore3(int Score){
+        db = getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(Game3Contract.Game3Table.COLUMN_SCORE3, Score);
+        db.insert(Game3Contract.Game3Table.TABLE_NAME, null, cv);
+    }
+
+    public List<Integer> getScores1(){
+        List<Integer> scores1List = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Game1Contract.Game1Table.TABLE_NAME, null);
+
+        if(c != null){
+            if(c.moveToFirst()){
+                do{
+                    scores1List.add((c.getInt(c.getColumnIndex(Game1Contract.Game1Table.COLUMN_SCORE1))));
+                } while(c.moveToNext());
+            }
+        }
+
+        c.close();
+        return scores1List;
+    }
+
+    public List<Integer> getScores2(){
+        List<Integer> scores2List = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Game2Contract.Game2Table.TABLE_NAME, null);
+
+        if(c.moveToFirst()){
+            do{
+                scores2List.add((c.getInt(c.getColumnIndex(Game2Contract.Game2Table.COLUMN_SCORE2))));
+            } while(c.moveToNext());
+        }
+        c.close();
+        return scores2List;
+    }
+    public List<Integer> getScores3(){
+        List<Integer> scores3List = new ArrayList<>();
+        db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM " + Game3Contract.Game3Table.TABLE_NAME, null);
+
+        if(c.moveToFirst()){
+            do{
+                scores3List.add((c.getInt(c.getColumnIndex(Game3Contract.Game3Table.COLUMN_SCORE3))));
+            } while(c.moveToNext());
+        }
+        c.close();
+        return scores3List;
+    }
 
     public List<Question> getAllQuestions(){
         List<Question> questionList = new ArrayList<>();
@@ -255,7 +346,6 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     public boolean updateData(String date,String input,Boolean goal1,Boolean goal2,Boolean goal3,Integer activity,Integer social,Integer sleep)
     {
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(DiaryContract.DiaryTable.COLUMN_DATE,date);
         contentValues.put(DiaryContract.DiaryTable.COLUMN_INPUT,input);
         contentValues.put(DiaryContract.DiaryTable.COLUMN_GOAL1,goal1);

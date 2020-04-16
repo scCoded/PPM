@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.autismdiaryapp.R;
+import com.example.autismdiaryapp.ui.Games.Game1Reaction.Score1;
+import com.example.autismdiaryapp.ui.questionnaire.QuizDbHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,11 +31,16 @@ public class Game2 extends AppCompatActivity {
 
     int turn =1;
 
+    int Score;
+
+    private QuizDbHelper dbHelper = new QuizDbHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
 
+        Score = 0;
         r = new Random();
 
         iv_emotion= (ImageView) findViewById(R.id.iv_Image);
@@ -62,7 +69,7 @@ public class Game2 extends AppCompatActivity {
                 //Check if answer is correct
                 if(b_Answer1.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())) {
                     Toast.makeText(Game2.this, "Correct", Toast.LENGTH_SHORT).show();
-
+                    Score +=1;
                     //Check if last Question
 
                     if(turn < list.size())
@@ -72,6 +79,7 @@ public class Game2 extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(Game2.this,"You finished the game!",Toast.LENGTH_SHORT).show();
+                        dbHelper.addScore2(Score);
                         finish();
                     }
 
@@ -79,6 +87,7 @@ public class Game2 extends AppCompatActivity {
                 else{
                     Toast.makeText(Game2.this,"Wrong!",Toast.LENGTH_SHORT).show();
                     Toast.makeText(Game2.this,"You lost the game!",Toast.LENGTH_SHORT).show();
+                    dbHelper.addScore2(Score);
                     finish();
                 }
 
@@ -89,7 +98,7 @@ public class Game2 extends AppCompatActivity {
             public void onClick(View v){
                 if(b_Answer2.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())) {
                     Toast.makeText(Game2.this, "Correct", Toast.LENGTH_SHORT).show();
-
+                    Score +=1;
                     //Check if last Question
 
                     if(turn < list.size()){
@@ -98,12 +107,14 @@ public class Game2 extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(Game2.this,"You finished the game!",Toast.LENGTH_SHORT).show();
+                        dbHelper.addScore2(Score);
                         finish();
                     }
                 }
                 else{
                     Toast.makeText(Game2.this,"Wrong!",Toast.LENGTH_SHORT).show();
                     Toast.makeText(Game2.this,"You lost the game!",Toast.LENGTH_SHORT).show();
+                    dbHelper.addScore2(Score);
                     finish();
                 }
 
@@ -113,7 +124,7 @@ public class Game2 extends AppCompatActivity {
             public void onClick(View v){
                 if(b_Answer3.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())) {
                     Toast.makeText(Game2.this, "Correct", Toast.LENGTH_SHORT).show();
-
+                    Score +=1;
                     //Check if last Question
 
                     if(turn < list.size()){
@@ -122,12 +133,15 @@ public class Game2 extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(Game2.this,"You finished the game!",Toast.LENGTH_SHORT).show();
+                        dbHelper.addScore2(Score);
+
                         finish();
                     }
                 }
                 else{
                     Toast.makeText(Game2.this,"Wrong!",Toast.LENGTH_SHORT).show();
                     Toast.makeText(Game2.this,"You lost the game!",Toast.LENGTH_SHORT).show();
+                    dbHelper.addScore2(Score);
                     finish();
                 }
 
@@ -138,7 +152,7 @@ public class Game2 extends AppCompatActivity {
             public void onClick(View v){
                 if(b_Answer4.getText().toString().equalsIgnoreCase(list.get(turn-1).getName())) {
                     Toast.makeText(Game2.this, "Correct", Toast.LENGTH_SHORT).show();
-
+                    Score +=1;
                     //Check if last Question
 
                     if(turn < list.size()){
@@ -147,11 +161,14 @@ public class Game2 extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(Game2.this,"You finished the game!",Toast.LENGTH_SHORT).show();
+                        dbHelper.addScore2(Score);
                     }
                 }
                 else{
                     Toast.makeText(Game2.this,"Wrong!",Toast.LENGTH_SHORT).show();
                     Toast.makeText(Game2.this,"You lost the game!",Toast.LENGTH_SHORT).show();
+                    dbHelper.addScore2(Score);
+
                     finish();
                 }
 

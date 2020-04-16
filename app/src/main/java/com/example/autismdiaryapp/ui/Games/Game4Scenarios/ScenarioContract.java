@@ -16,7 +16,6 @@ public final class ScenarioContract {
         public static final String COLUMN_BEST_RESPONSE = "best_response";
         public static final String COLUMN_WORST_RESPONSE = "worst_response";
 
-
     }
 
 

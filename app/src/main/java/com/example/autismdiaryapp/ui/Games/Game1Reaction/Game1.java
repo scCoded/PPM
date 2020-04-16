@@ -2,6 +2,7 @@ package com.example.autismdiaryapp.ui.Games.Game1Reaction;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.autismdiaryapp.R;
+import com.example.autismdiaryapp.ui.questionnaire.Answer;
+import com.example.autismdiaryapp.ui.questionnaire.QuizDbHelper;
 
 public class Game1 extends AppCompatActivity {
 
@@ -17,6 +20,8 @@ public class Game1 extends AppCompatActivity {
     TextView txt_Best;
     Button btn_Main,btn_Start;
     long startTime, endTime, currentTime, bestTime = 10000;
+
+    private QuizDbHelper dbHelper = new QuizDbHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +67,30 @@ public class Game1 extends AppCompatActivity {
                 btn_Start.setEnabled(true);
                 btn_Main.setEnabled(false);
 
+
+
                 if(currentTime < bestTime){
+
                     bestTime = currentTime;
                     txt_Best.setText("Best: " + bestTime + " ms");
+
                 }
+
             }
         });
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(bestTime != 1000){
+            Score1 finalScore = new Score1();
+            int bestTimeFinal = (int) bestTime; //converting to int so current time can be saved.
+            finalScore.setScore(bestTimeFinal);
+            dbHelper.addScore1(finalScore);
+        }
+
+
+    }
+
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.autismdiaryapp.R;
+import com.example.autismdiaryapp.ui.questionnaire.QuizDbHelper;
 
 import java.util.Random;
 import java.util.Timer;
@@ -28,6 +29,8 @@ public class Game3 extends AppCompatActivity {
 
     int correct_answer=0;
     int wrong_answer=0;
+
+    private QuizDbHelper dbHelper = new QuizDbHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,7 @@ public class Game3 extends AppCompatActivity {
                 @Override
                 public void run() {
                     score.setText("You answered all 10 questions.");
+                    dbHelper.addScore3(correct_answer);
                 }
             }, 1500);
 
